@@ -1,0 +1,6 @@
+Error: Valor duplicado | Code: 500 | When: 2025-11-13 11:41:24 | Content: {"message from pdo":"Duplicate entry '961938' for key 'usuarios_un'"}
+Error: Valor duplicado | Code: 500 | When: 2025-11-13 11:41:35 | Content: {"message from pdo":"Duplicate entry '961938' for key 'usuarios_un'"}
+Error: Valor duplicado | Code: 500 | When: 2025-11-13 11:57:14 | Content: {"message from pdo":"Duplicate entry '961938' for key 'usuarios_un'"}
+Error: Valor duplicado | Code: 500 | When: 2025-11-13 11:57:45 | Content: {"message from pdo":"Duplicate entry '961938' for key 'usuarios_un'"}
+Error: Valor duplicado | Code: 500 | When: 2025-11-13 12:03:53 | Content: {"message from pdo":"Duplicate entry '961938' for key 'usuarios_un'"}
+Error: Valor duplicado | Code: 500 | When: 2025-11-13 12:04:08 | Content: {"message from pdo":"Duplicate entry '961938' for key 'usuarios_un'"}
