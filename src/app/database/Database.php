@@ -35,40 +35,38 @@ class Database
         return self::connect();
     }
 
-static function setConfig(string|null $dbType)
-{
-    $file = null;
-    $isDefault = false;
+    static function setConfig(string|null $dbType)
+    {
+        $file = null;
 
-    if ($dbType === "intranet")
-        $file = "DB_FILE_INTRANET";
-    else if ($dbType === "workflow")
-        $file = "DB_FILE_WORKFLOW";
-     else if ($dbType === "senior")
-        $file = "DB_FILE_SENIOR_GBMX";
-    else if ($dbType === "casa")
-        $isDefault = true; 
-    
-    
-    
-    if ($isDefault) {
-        $config = $_ENV; 
-    } else {
-        $config = require $_ENV[$file];
+        if ($dbType === "intranet")
+            $file = "DB_FILE_INTRANET";
+        else if ($dbType === "workflow")
+            $file = "DB_FILE_WORKFLOW";
+        else if ($dbType === "senior")
+            $file = "DB_FILE_SENIOR_GBMX";
+
+
+        // $config = require $_ENV[$file];
+        $config = [];
+        $config["DB_TYPE"] = 'mysql';
+        $config["DB_HOST"] = 'mysql-db';
+        $config["DB_USER"] = 'root';
+        $config["DB_PASSWORD"] = 'root';
+        $config["DB_NAME"] = 'ammx';
+
+        self::config(
+            type: $config["DB_TYPE"],
+            host: $config["DB_HOST"],
+            username: $config["DB_USER"],
+            password: $config["DB_PASSWORD"],
+            dbname: $config["DB_NAME"],
+            server: $config["DB_SERVER"] ?? null,
+            service: $config["DB_PORT"] ?? null,
+        );
+
+        return new self;
     }
-
-    self::config(
-        type: $config["DB_TYPE"],
-        host: $config["DB_HOST"],
-        username: $config["DB_USER"],
-        password: $config["DB_PASSWORD"],
-        dbname: $config["DB_NAME"],
-        server: $config["DB_SERVER"] ?? null,
-        service: $config["DB_PORT"] ?? null,
-    );
-
-    return new self;
-}
 
     static function instance(): PDO
     {

@@ -69,7 +69,7 @@ window.onload = function (e) {
 
 async function initTable() {
   let translate = await fetch(
-    route('/public/js/dt/en.json')
+    'http://localhost:8080/public/js/dt/ptbr.json'
   );
   translate = await translate.json();
   let table = new DataTable("#list", {

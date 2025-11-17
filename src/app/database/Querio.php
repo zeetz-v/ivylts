@@ -25,9 +25,7 @@ class Querio
 
     protected static function initDb(): void
     {
-        // if (!isset(static::$db)) {
-        static::$db = Database::setConfig(static::$dbType)->get(static::$dbType);
-        // }
+        static::$db = Database::get(static::$dbType);
     }
 
     protected static function resetQuery(): void

@@ -8,15 +8,15 @@ use Exception;
 use src\app\database\Database;
 use src\exceptions\pdo\IsEmptyException;
 
-class Usuario extends Querio
+class User extends Querio
 {
-    protected static string $table = 'bd_device_request.usuarios';
+    protected static string $table = 'users';
     protected static string $dbType = 'intranet';
 
     public static function findSeniorByMatricula($matricula)
     {
 
-        if(!$matricula)
+        if (!$matricula)
             throw new IsEmptyException();
 
         $db = Database::get('senior');
