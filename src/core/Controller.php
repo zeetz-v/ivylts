@@ -33,7 +33,7 @@ class Controller
         /** @var Container */
         $container = $this->startContainerInjection();
         $controllerObject = $container->get($controller);
-        
+
         /** @var Redirect|View|Json|null */
         $response = $this->handleRequest($controller, $method, $controllerObject, $container, $params);
         if (!$response)
@@ -137,12 +137,16 @@ class Controller
 
             $params = $params ?: [];
             $paramsSpecials = [];
-            
+
+
             if ($parameters) {
                 foreach ($parameters as $parameterFromMethod) {
-                    $parameterNameAbsolute = $parameterFromMethod->getType()->getName();
-                    if (!in_array($parameterNameAbsolute, ["string", "int", "bool", "float"])) 
-                        $paramsSpecials[] = new $parameterNameAbsolute();
+                    $parameterNameAbsolute = $parameterFromMethod->getType()?->getName();
+                    if (!in_array($parameterNameAbsolute, ["string", "int", "bool", "float"])) {
+                        $r = (new $parameterNameAbsolute);
+                        $r->execute();
+                        $paramsSpecials[] = (new $parameterNameAbsolute);
+                    }
                 }
                 $response = $controllerObject->$method(...$paramsSpecials, ...$params);
             } else

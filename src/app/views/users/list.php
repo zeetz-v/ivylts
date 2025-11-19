@@ -21,7 +21,7 @@ $this->layout("templates/base", [
 </style>
 
 
-<form method="POST" action="" id="formCadastroUsuario">
+<form method="POST" action="<?= route('store'); ?>" id="formCadastroUsuario">
     <div class="row mb-3">
         <div class="col-md-4">
             <label for="id" class="form-label fw-bold">Id <span class="text-danger"></span></label>
@@ -29,11 +29,13 @@ $this->layout("templates/base", [
         </div>
         <div class="col-md-4">
             <label for="name" class="form-label fw-bold">Nome <span class="text-danger">*</span></label>
-            <input type="text" class="form-control form-control-sm" id="name" name="name" required>
+            <input type="text" class="form-control form-control-sm <?= isWrong('name') ? 'is-invalid' : '' ?>" id="name" name="name" value="<?= old('name') ?>">
+             <small class="text-muted"><?= isWrongText('name') ?></small>
         </div>
         <div class="col-md-4">
             <label for="email" class="form-label fw-bold">E-mail <span class="text-danger">*</span></label>
-            <input type="email" class="form-control form-control-sm" id="email" name="email" required>
+            <input type="email" class="form-control form-control-sm <?= isWrong('email') ? 'is-invalid' : '' ?>" id="email" name="email" value="<?= old('email') ?>" required>
+            <small class="text-muted"><?= isWrongText('email') ?></small>
         </div>
     </div>
 
@@ -59,9 +61,13 @@ $this->layout("templates/base", [
         <?php if (isset($users) && count($users) > 0) { ?>
             <?php foreach ($users as $user_key => $u) { ?>
                 <tr>
-                    <td class="text-center"><?= $u->id ?></td>
-                    <td class="text-center"><?= $u->name ?></td>
-                    <td class="text-center"><?= $u->email ?></td>
+                    <td class="text-center <?= $u->deleted_at ? 'text-decoration-line-through' : '' ?>">
+                        <?= $u->id ?>
+                    </td>
+                    <td class="text-center <?= $u->deleted_at ? 'text-decoration-line-through' : '' ?>">
+                        <?= $u->name ?>
+                    </td>
+                    <td class="text-center <?= $u->deleted_at ? 'text-decoration-line-through' : '' ?>"><?= $u->email ?></td>
                     <td>
                         <a class="btn btn-sm btn-danger"><i class="ph ph-trash"></i></a>
                         <a class="btn btn-sm btn-primary"><i class="ph ph-pencil"></i></a>

@@ -3,7 +3,6 @@
 namespace src\routes;
 
 use src\app\controllers\HelloController;
-use src\app\controllers\UsuarioController;
 use src\core\Route;
 
 
@@ -13,3 +12,10 @@ Route::get(
     'hello'
 )
     ->name('hello');
+
+Route::post(
+    '/users/store',
+    HelloController::class,
+    'store'
+)
+    ->name('store');

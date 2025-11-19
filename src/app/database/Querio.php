@@ -222,7 +222,7 @@ class Querio
                 $stmt = static::$db->prepare(static::$queryString);
                 $r = $stmt->execute(static::$bind ?? []);
                 if ($operation === 'insert')
-                    return array_merge(['menuId' => static::$db->lastInsertId()], static::$bind);
+                    return array_merge(['id' => static::$db->lastInsertId()], static::$bind);
                 else if ($operation === 'update')
                     return static::$bind;
                 return $r;
@@ -493,7 +493,7 @@ class Querio
     public static function create(array $data, bool $setUuid = true): bool|array
     {
         if ($setUuid)
-            $data['id'] = UuidV4::uuid4()->toString();
+            $data['uuid'] = UuidV4::uuid4()->toString();
 
         $data['created_at'] = date('Y-m-d H:i:s');
         return static::insert($data)->finish();
@@ -588,5 +588,16 @@ class Querio
     public static function getAll(array $fields = ['*']): array
     {
         return static::select($fields)->finish() ?: [];
+    }
+
+
+    /**
+     * Find all records actives
+     * @param array<int, string> $fields
+     * @return array<int, object>
+     */
+    public static function getActives(array $fields = ['*']): array
+    {
+        return static::select($fields)->whereIsNull('deleted_at')->finish() ?: [];
     }
 }
