@@ -1,10 +1,10 @@
-/* @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;500;600;700;900&family=Outfit:wght@300;500;800&display=swap");
- */
-@import url("https://fonts.googleapis.com/css?family=Work+Sans&display=swap");
+
+@import url('https://fonts.googleapis.com/css2?family=Hedvig+Letters+Sans&display=swap');
+
 
 :root {
   --text-white: #fff;
-  --ff-poppins: "Work Sans", sans-serif;
+  --ff-poppins: "Hedvig Letters Sans", sans-serif;
   --text-dark-blue: #19286b;
   --font-low: 0.5rem;
   --font-medium: 0.8rem;
@@ -200,7 +200,7 @@ input[readonly] {
   left: 50%;
   transform: translate(-50%, -50%);
   width: 40%;
-  height:25%;
+  height: 25%;
   background-color: #fff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   padding: 20px;
@@ -238,7 +238,6 @@ input[readonly] {
   left: 0;
   right: 0;
   bottom: 0;
-
 
   background-color: #000000c7;
   z-index: 1000;
