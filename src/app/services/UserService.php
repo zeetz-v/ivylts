@@ -2,10 +2,8 @@
 
 namespace src\app\services;
 
-use Exception;
 use src\app\database\entities\User;
-use src\app\database\Querio;
-use src\support\Notification;
+use src\exceptions\app\EmailDuplicateException;
 
 class UserService
 {
@@ -18,18 +16,16 @@ class UserService
      */
     function create(array $data): array|bool
     {
-        try {
-            $user_by_email = User::selectOne(['*'])->where("email", "=", "{$data["email"]}")->finish();
+        if ($this->byEmail($data["email"]))
+            throw new EmailDuplicateException;
 
-            if ($user_by_email) {
-                notification()->warning("O e-mail informado já está em uso");
-                return false;
-            }
+        return User::create($data);
+    }
 
 
-            return User::create($data);
-        } catch (Exception $e) {
-            return false;
-        }
+
+    function byEmail(string $email)
+    {
+        return $user_by_email = User::selectOne(['*'])->where("email", "=", $email)->finish();
     }
 }

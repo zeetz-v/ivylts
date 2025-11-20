@@ -3,6 +3,8 @@
 namespace src\core;
 
 use Exception;
+use src\support\RedirectBack;
+use src\support\Sessions;
 use src\support\Uri;
 use src\support\View;
 
@@ -18,9 +20,15 @@ class Bootstrap
             Middleware::execute($r['middlewares']);
             (new Controller(explode(":", implode('@', $r['action']))[0]));
         } catch (Exception $e) {
-            $message = $e->getMessage();
-            $r = View::render('templates.error', ['mssg' => $message, 'code' => $e->getCode()]);
-            echo $r::$isString;
+            if (!property_exists($e, 'entity')) {
+                $message = $e->getMessage();
+                $r = View::render('templates.error', ['mssg' => $message, 'code' => $e->getCode()]);
+                echo $r::$isString;
+            }
+
+            Sessions::set("old", array_merge($_POST, $_GET), true);
+            notification()->error($e->getMessage());
+            redirect()->back()->make();
         }
     }
 }

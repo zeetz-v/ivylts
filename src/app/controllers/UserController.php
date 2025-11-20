@@ -15,6 +15,10 @@ class UserController
     }
 
 
+    /**
+     * List users
+     * @return View
+     */
     function list(): View
     {
         $users = User::getAll();
@@ -31,7 +35,7 @@ class UserController
     {
         $user = $this->user_service->create($request->get());
         if (!$user)
-            return backError('Não foi possível criar o usuário');
+            return backError('Não foi possível criar o usuário.');
         return backSuccess('O usuário foi criado com sucesso');
     }
 }
