@@ -37,24 +37,8 @@ class Database
 
     static function setConfig(string|null $dbType)
     {
-        $file = null;
-
-        if ($dbType === "intranet")
-            $file = "DB_FILE_INTRANET";
-        else if ($dbType === "workflow")
-            $file = "DB_FILE_WORKFLOW";
-        else if ($dbType === "senior")
-            $file = "DB_FILE_SENIOR_GBMX";
-
-
-        // $config = require $_ENV[$file];
-        $config = [];
-        $config["DB_TYPE"] = 'mysql';
-        $config["DB_HOST"] = 'mysql-db';
-        $config["DB_USER"] = 'root';
-        $config["DB_PASSWORD"] = 'root';
-        $config["DB_NAME"] = 'ammx';
-
+        $file = "DB_FILE_" . strtoupper($dbType);
+        $config = dbEnv($file);
         self::config(
             type: $config["DB_TYPE"],
             host: $config["DB_HOST"],
@@ -64,7 +48,6 @@ class Database
             server: $config["DB_SERVER"] ?? null,
             service: $config["DB_PORT"] ?? null,
         );
-
         return new self;
     }
 

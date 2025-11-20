@@ -58,7 +58,8 @@ function isWrongText(string $key)
 function forgetSessions($sessions = []): void
 {
     foreach ($sessions as $index => $session) {
-        if (isset($_SESSION[$session])) unset($_SESSION[$session]);
+        if (isset($_SESSION[$session]))
+            unset($_SESSION[$session]);
     }
 }
 
@@ -193,7 +194,59 @@ function getFirstAndLastName(string $fullName): string
     }
 
     $firstName = ucfirst(strtolower($nameParts[0]));
-    $lastName  = ucfirst(strtolower(end($nameParts)));
+    $lastName = ucfirst(strtolower(end($nameParts)));
 
     return "{$firstName} {$lastName}";
+}
+
+
+
+function dbEnv(string $file): array
+{
+    return is_remote() ? db_remote($file) : db_local();
+}
+
+
+/**
+ * obtem os parâmetros para conexao remota com os servidores de teste e produção
+ * @param string $file
+ * @return array
+ */
+function db_remote(string $file): array
+{
+    $map = [
+        "DB_FILE_INTRANET" => "/var/www/htdocs/{$_ENV['APP_COMPANY']}/includes/configuracoes.php",
+        "DB_FILE_WORKFLOW" => "/var/www/htdocs/{$_ENV['APP_COMPANY']}/includes/sqlserver_wf_prod.php",
+        "DB_FILE_INFORMIX" => "/var/www/htdocs/{$_ENV['APP_COMPANY']}/includes/informix.php",
+        "DB_FILE_SENIOR_GBMX" => "/var/www/htdocs/{$_ENV['APP_COMPANY']}/includes/senior_gbmx.php"
+    ];
+    return require $map[$file];
+}
+
+/**
+ * obtém os parâmetros para conexão local (exemplo está usando o docker)
+ * @return array{DB_HOST: string, DB_NAME: string, DB_PASSWORD: string, DB_TYPE: string, DB_USER: string}
+ */
+function db_local(): array
+{
+    return [
+        "DB_TYPE" => "mysql",
+        "DB_HOST" => "mysql-db",
+        "DB_USER" => "root",
+        "DB_PASSWORD" => "root",
+        "DB_NAME" => "ammx",
+    ];
+}
+
+
+/**
+ * verifica se a execução do app está em um servidor remoto
+ * @return bool
+ */
+function is_remote(): bool
+{
+    return in_array(
+        $_ENV["APP_ENVIRONMENT"],
+        ["http://172.30.0.59", "http://172.30.0.94"]
+    );
 }
