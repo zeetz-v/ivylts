@@ -10,7 +10,7 @@ use src\exceptions\pdo\IsEmptyException;
 
 class User extends Querio
 {
-    protected static string $table = 'users';
+    protected static string $table = 'bd_amsted.z_users';
     protected static string $dbType = 'intranet';
 
     public static function findSeniorByMatricula($matricula)

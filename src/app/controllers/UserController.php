@@ -7,7 +7,7 @@ use src\app\services\UserService;
 use src\support\Redirect;
 use src\support\View;
 
-class HelloController
+class UserController
 {
     function __construct(
         private UserService $user_service,
@@ -15,7 +15,7 @@ class HelloController
     }
 
 
-    function hello(): View
+    function list(): View
     {
         $users = User::getAll();
         return view('users.list', ['users' => $users]);

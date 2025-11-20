@@ -2,20 +2,20 @@
 
 namespace src\routes;
 
-use src\app\controllers\HelloController;
+use src\app\controllers\UserController;
 use src\core\Route;
 
 
 Route::get(
-    '/hello',
-    HelloController::class,
-    'hello'
+    '/users/list',
+    UserController::class,
+    'list'
 )
-    ->name('hello');
+    ->name('users.list');
 
 Route::post(
     '/users/store',
-    HelloController::class,
+    UserController::class,
     'store'
 )
-    ->name('store');
+    ->name('users.store');

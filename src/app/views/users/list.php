@@ -21,7 +21,7 @@ $this->layout("templates/base", [
 </style>
 
 
-<form method="POST" action="<?= route('store'); ?>" id="formCadastroUsuario">
+<form method="POST" action="<?= route('users.store'); ?>" id="form-create">
     <div class="row mb-3">
         <div class="col-md-4">
             <label for="id" class="form-label fw-bold">Id <span class="text-danger"></span></label>
