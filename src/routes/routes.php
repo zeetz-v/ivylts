@@ -19,3 +19,19 @@ Route::post(
     'store'
 )
     ->name('users.store');
+
+Route::get(
+    '/users/edit/{uuid}',
+    UserController::class,
+    'edit'
+)
+    ->name('users.edit')
+    ->whereUuid('uuid');
+
+
+Route::post(
+    '/users/update/{uuid}',
+    UserController::class,
+    'update'
+)
+    ->name('users.update');

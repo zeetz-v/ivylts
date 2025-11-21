@@ -3,7 +3,9 @@ namespace src\app\controllers;
 
 use src\app\database\entities\User;
 use src\app\requests\Users\StoreRequest;
+use src\app\requests\Users\UpdateRequest;
 use src\app\services\UserService;
+use src\exceptions\app\NotFoundWithUuidException;
 use src\support\Redirect;
 use src\support\View;
 
@@ -37,5 +39,34 @@ class UserController
         if (!$user)
             return backError('Não foi possível criar o usuário.');
         return backSuccess('O usuário foi criado com sucesso');
+    }
+
+
+    /**
+     * Edit user
+     * @param string $uuid
+     * @throws NotFoundWithUuidException
+     * @return View
+     */
+    function edit(string $uuid): View
+    {
+        $user = User::getByUuid($uuid);
+        if (!$user)
+            throw new NotFoundWithUuidException;
+        return view('users.edit', ['u' => $user]);
+    }
+
+
+    /**
+     * Update a user
+     * @param UpdateRequest $request
+     * @return Redirect
+     */
+    function update(UpdateRequest $request, string $uuid)
+    {
+        $updated = $this->user_service->update($request->get());
+        if (!$updated)
+            return backError('Não foi possível atualizar os dados');
+        return backSuccess('Os dados do usuário foram atualizados com sucesso 🎉');
     }
 }

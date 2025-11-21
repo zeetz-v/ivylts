@@ -29,19 +29,22 @@ $this->layout("templates/base", [
         </div>
         <div class="col-md-4">
             <label for="name" class="form-label fw-bold">Nome <span class="text-danger">*</span></label>
-            <input type="text" class="form-control form-control-sm <?= isWrong('name') ? 'is-invalid' : '' ?>" id="name" name="name" value="<?= old('name') ?>">
-             <small class="text-muted"><?= isWrongText('name') ?></small>
+            <input type="text" class="form-control form-control-sm <?= isWrong('name') ? 'is-invalid' : '' ?>" id="name"
+                name="name" value="<?= old('name') ?>" required>
+            <small class="text-muted"><?= isWrongText('name') ?></small>
         </div>
         <div class="col-md-4">
             <label for="email" class="form-label fw-bold">E-mail <span class="text-danger">*</span></label>
-            <input type="email" class="form-control form-control-sm <?= isWrong('email') ? 'is-invalid' : '' ?>" id="email" name="email" value="<?= old('email') ?>" required>
+            <input type="email" class="form-control form-control-sm <?= isWrong('email') ? 'is-invalid' : '' ?>"
+                id="email" name="email" value="<?= old('email') ?>" required>
             <small class="text-muted"><?= isWrongText('email') ?></small>
         </div>
     </div>
 
 
     <div class="buttonsDiv">
-        <button type="submit" class="btn btn-company" onclick="loading('show', true);">Salvar <i class="ph ph-floppy-disk"></i></button>
+        <button type="submit" class="btn btn-company" onclick="loading('show', true);">Salvar <i
+                class="ph ph-floppy-disk"></i></button>
         <a class="btn btn-secondary" id="cancelForm">Cancelar</a>
     </div>
 </form>
@@ -70,7 +73,8 @@ $this->layout("templates/base", [
                     <td class="text-center <?= $u->deleted_at ? 'text-decoration-line-through' : '' ?>"><?= $u->email ?></td>
                     <td>
                         <a class="btn btn-sm btn-danger"><i class="ph ph-trash"></i></a>
-                        <a class="btn btn-sm btn-primary"><i class="ph ph-pencil"></i></a>
+                        <a class="btn btn-sm btn-primary" href="<?= route('users.edit', ['uuid' => $u->uuid]) ?>" onclick="loading('show', true);"><i
+                                class="ph ph-pencil"></i></a>
                     </td>
                 </tr>
             <?php } ?>
