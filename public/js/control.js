@@ -79,15 +79,6 @@ async function initTable() {
     info: false,
     language: translate,
   });
-
-  document.getElementById("btnActives").addEventListener("click", function () {
-    table.column(6).search("^active$", true, false).draw();
-  });
-
-  // botão - todos
-  document.getElementById("btnAll").addEventListener("click", function () {
-    table.column(6).search("").draw();
-  });
 }
 
 initTable();

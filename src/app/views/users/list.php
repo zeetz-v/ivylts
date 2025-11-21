@@ -41,7 +41,7 @@ $this->layout("templates/base", [
 
 
     <div class="buttonsDiv">
-        <button type="submit" class="btn btn-company">Salvar <i class="ph ph-floppy-disk"></i></button>
+        <button type="submit" class="btn btn-company" onclick="loading('show', true);">Salvar <i class="ph ph-floppy-disk"></i></button>
         <a class="btn btn-secondary" id="cancelForm">Cancelar</a>
     </div>
 </form>
