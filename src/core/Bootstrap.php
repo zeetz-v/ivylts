@@ -24,6 +24,7 @@ class Bootstrap
                 $message = $e->getMessage();
                 $r = View::render('templates.error', ['mssg' => $message, 'code' => $e->getCode()]);
                 echo $r::$isString;
+                die;
             }
 
             Sessions::set("old", array_merge($_POST, $_GET), true);
