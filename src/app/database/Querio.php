@@ -506,7 +506,7 @@ class Querio
 
     public static function getByUuid(string $uuid): stdClass|bool
     {
-        return static::getByColumn("id", $uuid);
+        return static::getByColumn("uuid", $uuid);
     }
 
     public static function getByColumn(string $column, string $value, string $operation = "="): stdClass|bool
@@ -563,7 +563,7 @@ class Querio
 
     public static function updateByUuid(string $uuid, array $data)
     {
-        return static::update($data)->where("id", "=", $uuid)->finish(1);
+        return static::update($data)->where("uuid", "=", $uuid)->finish(1);
     }
 
     /**
