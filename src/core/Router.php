@@ -11,7 +11,6 @@ class Router
 
     private string $uri;
     private string $method;
-    /** @var array<string, array<string, string>> */
     private array $routesRegistered;
 
     public function __construct()
