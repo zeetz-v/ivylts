@@ -6,7 +6,6 @@ $this->layout("templates/base", [
         'https://cdn.datatables.net/2.3.2/css/dataTables.bootstrap5.css'
     ],
     "js" => [
-        path()->js("control.js"),
     ],
 ]);
 ?>
@@ -72,9 +71,13 @@ $this->layout("templates/base", [
                     </td>
                     <td class="text-center <?= $u->deleted_at ? 'text-decoration-line-through' : '' ?>"><?= $u->email ?></td>
                     <td>
-                        <a class="btn btn-sm btn-danger"><i class="ph ph-trash"></i></a>
-                        <a class="btn btn-sm btn-primary" href="<?= route('users.edit', ['uuid' => $u->uuid]) ?>" onclick="loading('show', true);"><i
-                                class="ph ph-pencil"></i></a>
+                        <button class="btn btn-sm btn-danger" popovertarget="confirm-dialog-user-delete"
+                            data-dc-title="Exclusão de usuário"
+                            data-dc-description="Essa ação é irreversível. Os posts e demais informações relacionadas ao usuário sumirão. Tem certeza que deseja continuar?"
+                            data-dc-href="<?= route("users.delete", ["uuid" => $u->uuid]) ?>"><i
+                                class="ph ph-trash"></i></button>
+                        <a class="btn btn-sm btn-primary" href="<?= route('users.edit', ['uuid' => $u->uuid]) ?>"
+                            onclick="loading('show', true);"><i class="ph ph-pencil"></i></a>
                     </td>
                 </tr>
             <?php } ?>
@@ -82,5 +85,43 @@ $this->layout("templates/base", [
     </tbody>
 
 </table>
-<div id="edit-form" class="sidebar-content"></div>
-<?= $this->insert('templates/dt'); ?>
+
+
+<dialog id="confirm-dialog-user-delete" popover>
+    <h3 id="dialog-custom-title"></h3>
+    <p id="dialog-custom-description"></p>
+    <a class="btn btn-sm btn-danger" id="dialog-custom-href">Delete</a>
+    <button class="btn btn-sm btn-secondary" popovertarget="confirm-dialog-user-delete"
+        popovertargetaction="hide">Cancel</button>
+</dialog>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const deleteButtons = document.querySelectorAll('[popovertarget="confirm-dialog-user-delete"]');
+        const deleteDialog = document.getElementById('confirm-dialog-user-delete');
+
+        if (!deleteDialog || deleteButtons.length === 0)
+            return;
+
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', function (event) {
+                const triggerButton = this;
+                const dialogTitle = deleteDialog.querySelector('#dialog-custom-title');
+                const dialogDescription = deleteDialog.querySelector('#dialog-custom-description');
+                const dialogHref = deleteDialog.querySelector('#dialog-custom-href');
+
+                if (!dialogTitle
+                    || !dialogDescription
+                    || !dialogHref
+                )
+                    return;
+
+                dialogTitle.innerHTML = triggerButton.dataset.dcTitle;
+                dialogDescription.innerHTML = triggerButton.dataset.dcDescription;
+                dialogHref.href = triggerButton.dataset.dcHref;
+
+            });
+        });
+    });
+</script>

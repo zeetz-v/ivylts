@@ -35,6 +35,6 @@ $this->layout("templates/base", [
     <div class="buttonsDiv">
         <button type="submit" class="btn btn-company" onclick="loading('show', true);">Atualizar <i
                 class="ph ph-floppy-disk"></i></button>
-        <a class="btn btn-secondary" id="cancelForm">Cancelar</a>
+        <a class="btn btn-secondary" href="<?= route('users.list') ?>">Cancelar</a>
     </div>
 </form>

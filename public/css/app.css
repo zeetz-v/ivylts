@@ -1,6 +1,4 @@
-
-@import url('https://fonts.googleapis.com/css2?family=Hedvig+Letters+Sans&display=swap');
-
+@import url("https://fonts.googleapis.com/css2?family=Hedvig+Letters+Sans&display=swap");
 
 :root {
   --text-white: #fff;
@@ -16,6 +14,7 @@
   --error: #9b1b12;
   --warning: #ffbe27;
   --info: #008084;
+   --color-primary-hue: 200;
 }
 
 .btn.btn-warning {
@@ -250,4 +249,18 @@ input[readonly] {
 
 .badge-cell {
   text-align: center;
+}
+
+[popover] {
+  max-inline-size: 460px;
+  margin: auto;
+  padding: 1.5rem;
+  border: none;
+  border-radius: 0.5rem;
+  box-shadow: 2px 8px 16px oklch(28% 0.12 var(--color-primary-hue) / 25%);
+  border-left: 3px solid #9b1b12;
+}
+
+::backdrop {
+  background-color: oklch(7% 0.25 var(--color-primary-hue) / 25%);
 }

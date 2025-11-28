@@ -35,3 +35,11 @@ Route::post(
     'update'
 )
     ->name('users.update');
+
+Route::get(
+    '/users/delete/{uuid}',
+    UserController::class,
+    'delete'
+)
+    ->name('users.delete')
+    ->whereUuid('uuid');

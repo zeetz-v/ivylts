@@ -33,10 +33,6 @@ class UserService
      */
     function update(array $data)
     {
-        $user = User::getByUuid($data["uuid"]);
-        if (!$user)
-            throw new NotFoundWithUuidException;
-
         return User::updateByUuid($data["uuid"], $data);
     }
 

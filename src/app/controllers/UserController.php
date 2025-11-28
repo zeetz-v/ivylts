@@ -64,9 +64,19 @@ class UserController
      */
     function update(UpdateRequest $request, string $uuid)
     {
-        $updated = $this->user_service->update($request->get());
-        if (!$updated)
-            return backError('Não foi possível atualizar os dados');
-        return backSuccess('Os dados do usuário foram atualizados com sucesso 🎉');
+        $user = User::getByUuid($uuid);
+        if (!$user)
+            throw new NotFoundWithUuidException(['uuid' => $uuid]);
+
+        return !$this->user_service->update($request->get()) ?
+            backError('Não foi possível atualizar os dados') :
+            backSuccess('Os dados do usuário foram atualizados com sucesso 🎉');
+    }
+
+
+
+    function delete()
+    {
+        return backSuccess("Usuário excluído com sucesso");
     }
 }
