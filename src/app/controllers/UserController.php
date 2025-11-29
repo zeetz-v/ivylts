@@ -75,8 +75,17 @@ class UserController
 
 
 
-    function delete()
+    function delete(string $uuid)
     {
-        return backSuccess("Usuário excluído com sucesso");
+        $user = User::getByUuid($uuid);
+        if (!$user)
+            throw new NotFoundWithUuidException(['uuid' => $uuid]);
+
+        $deleted = $user->destroy();
+        if ($deleted)
+            return backSuccess("Usuário excluído com sucesso 🎉");
+
+        return backError("Whoops! Houve um erro ao tentar excluir o usuário ☹️");
+
     }
 }

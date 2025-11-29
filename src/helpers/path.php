@@ -27,7 +27,7 @@ function path()
 
         function start_path()
         {
-            return $_ENV["APP_ENVIRONMENT"] . '/' . str_replace("/var/www/htdocs/", "", getcwd());
+            return !is_remote() ? $_ENV["APP_ENVIRONMENT"] : $_ENV["APP_ENVIRONMENT"] . '/' . str_replace('/var/www/htdocs/', "", getcwd());
         }
     };
 }

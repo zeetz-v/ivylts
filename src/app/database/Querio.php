@@ -23,6 +23,8 @@ class Querio
     protected static array $bind = [];
     protected static bool $selectIsOne = false;
 
+    public string $uuid;
+
     protected static function initDb(): void
     {
         static::$db = Database::get(static::$dbType);
@@ -202,9 +204,9 @@ class Querio
     }
 
     /**
-     * @return object|array<int, object>|bool
+     * @return mixed
      */
-    public static function finish($lvl = 0): object|array|bool
+    public static function finish($lvl = 0): mixed
     {
         static::initDb();
 
@@ -216,8 +218,8 @@ class Querio
             $operation = strtolower(trim($firstWord));
             $isSelect = $operation === 'select';
 
-            // if ($lvl === 1)
-            //     dd(static::$queryString);
+            if ($lvl === 1)
+                dd(static::$queryString);
             if (!$isSelect) {
                 $stmt = static::$db->prepare(static::$queryString);
                 $r = $stmt->execute(static::$bind ?? []);
@@ -232,7 +234,9 @@ class Querio
 
                 $stmt = static::$db->prepare(static::$queryString);
                 $stmt->execute(static::$bind ?? []);
-                $stmt->setFetchMode(PDO::FETCH_OBJ);
+                // $stmt->setFetchMode(PDO::FETCH_OBJ);
+                $stmt->setFetchMode(PDO::FETCH_CLASS, static::class);
+
 
                 if (static::$selectIsOne) {
                     $found = $stmt->fetch();
@@ -499,17 +503,17 @@ class Querio
         return static::insert($data)->finish();
     }
 
-    public static function getById(int $id): stdClass|bool
+    public static function getById(int $id): mixed
     {
         return static::getByColumn("id", $id);
     }
 
-    public static function getByUuid(string $uuid): stdClass|bool
+    public static function getByUuid(string $uuid): mixed
     {
         return static::getByColumn("uuid", $uuid);
     }
 
-    public static function getByColumn(string $column, string $value, string $operation = "="): stdClass|bool
+    public static function getByColumn(string $column, string $value, string $operation = "="): mixed
     {
         return static::selectOne()->where($column, $operation, $value)->finish();
     }
@@ -599,5 +603,11 @@ class Querio
     public static function getActives(array $fields = ['*']): array
     {
         return static::select($fields)->whereIsNull('deleted_at')->finish() ?: [];
+    }
+
+
+    function destroy()
+    {
+        return static::delete()->whereEquals('uuid', $this?->uuid)->finish();
     }
 }
