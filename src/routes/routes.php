@@ -43,3 +43,11 @@ Route::get(
 )
     ->name('users.delete')
     ->whereUuid('uuid');
+
+Route::get(
+    '/users/status/change/{uuid}',
+    UserController::class,
+    'status_change'
+)
+    ->name('users.status.change')
+    ->whereUuid('uuid');

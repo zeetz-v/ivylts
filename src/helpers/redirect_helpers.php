@@ -8,7 +8,7 @@ use src\core\Route;
  * @param string $route
  * @return string
  */
-function route(string $routeName, array $indexes = [])
+function route(string $routeName, array $indexes = [], array $query_params = [])
 {
 
     $r = findUriByName(Route::routes(), $routeName);
@@ -36,6 +36,8 @@ function route(string $routeName, array $indexes = [])
 
     if (!$r)
         throw new Exception('route.404: ' . $routeName);
+    if ($query_params)
+        return $_ENV["APP_URL"] . $r['uri'] . "?" . http_build_query($query_params);
     return $_ENV["APP_URL"] . $r['uri'];
 }
 

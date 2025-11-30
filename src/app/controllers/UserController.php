@@ -1,12 +1,14 @@
 <?php
 namespace src\app\controllers;
 
+use DateTime;
 use src\app\database\entities\User;
 use src\app\requests\Users\StoreRequest;
 use src\app\requests\Users\UpdateRequest;
 use src\app\services\UserService;
 use src\exceptions\app\NotFoundWithUuidException;
 use src\support\Redirect;
+use src\support\Request;
 use src\support\View;
 
 class UserController
@@ -75,7 +77,13 @@ class UserController
 
 
 
-    function delete(string $uuid)
+    /**
+     * Delete user by uuid
+     * @param string $uuid
+     * @throws NotFoundWithUuidException
+     * @return Redirect
+     */
+    function delete(string $uuid): Redirect
     {
         $user = User::getByUuid($uuid);
         if (!$user)
@@ -84,8 +92,24 @@ class UserController
         $deleted = $user->destroy();
         if ($deleted)
             return backSuccess("Usuário excluído com sucesso 🎉");
-
         return backError("Whoops! Houve um erro ao tentar excluir o usuário ☹️");
+    }
 
+
+
+    function status_change(string $uuid)
+    {
+        $user = User::getByUuid($uuid);
+        if (!$user)
+            throw new NotFoundWithUuidException(['uuid' => $uuid]);
+
+        $status = Request::getQuery("status");
+        $user->deleted_at = $status === 'desabilitar' ? (new DateTime(""))->format("Y-m-d H:i:s") : null;
+
+        $updated = $user->save_();
+        if (!$updated)
+            return backError("Whoops! Não foi possível {$status} o usuário");
+
+        return backSuccess(["O status do usuário foi alterado com sucesso 🎉", "Status: {$status}"]);
     }
 }

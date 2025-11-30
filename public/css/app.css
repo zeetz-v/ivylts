@@ -14,7 +14,7 @@
   --error: #9b1b12;
   --warning: #ffbe27;
   --info: #008084;
-   --color-primary-hue: 200;
+  --color-primary-hue: 200;
 }
 
 .btn.btn-warning {
@@ -258,9 +258,16 @@ input[readonly] {
   border: none;
   border-radius: 0.5rem;
   box-shadow: 2px 8px 16px oklch(28% 0.12 var(--color-primary-hue) / 25%);
-  border-left: 3px solid #9b1b12;
 }
 
 ::backdrop {
   background-color: oklch(7% 0.25 var(--color-primary-hue) / 25%);
+}
+
+#dialog-red {
+  border-left: 3px solid #9b1b12;
+}
+
+#dialog-green {
+  border-left: 3px solid #2c9940;
 }

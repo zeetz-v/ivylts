@@ -567,7 +567,7 @@ class Querio
 
     public static function updateByUuid(string $uuid, array $data)
     {
-        return static::update($data)->where("uuid", "=", $uuid)->finish(1);
+        return static::update($data)->where("uuid", "=", $uuid)->finish(0);
     }
 
     /**
@@ -609,5 +609,10 @@ class Querio
     function destroy()
     {
         return static::delete()->whereEquals('uuid', $this?->uuid)->finish();
+    }
+
+    function save_()
+    {
+        return static::update((array) $this)->whereEquals('uuid', $this?->uuid)->finish();
     }
 }
