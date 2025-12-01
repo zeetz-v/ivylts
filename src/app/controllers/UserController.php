@@ -96,8 +96,13 @@ class UserController
     }
 
 
-
-    function status_change(string $uuid)
+    /**
+     * Update deleted_at of user
+     * @param string $uuid
+     * @throws NotFoundWithUuidException
+     * @return Redirect
+     */
+    function status_change(string $uuid): Redirect
     {
         $user = User::getByUuid($uuid);
         if (!$user)
