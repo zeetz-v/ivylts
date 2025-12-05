@@ -14,6 +14,8 @@ use src\support\RequestType;
 use src\support\Uri;
 use src\support\View;
 
+use function DI\get;
+
 class Controller
 {
 
@@ -44,7 +46,8 @@ class Controller
             echo $response::$isString;
         } else {
             if (in_array(true, [$response->returnClass instanceof RedirectUri, $response->returnClass instanceof RedirectRoute])) {
-                header("Location: {$_ENV['APP_URL']}{$response->uri}");
+                $url = path()->get_url();
+                header("Location: {$url}{$response->uri}");
             } else if ($response->returnClass instanceof RedirectBack) {
                 header('Location: ' . $response->uri);
             }

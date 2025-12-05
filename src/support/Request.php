@@ -96,6 +96,19 @@ class Request
     }
 
 
+    
+    /**
+     * @param ?string $param null - as default
+     * @return string|array<string, int|string>|null
+     */
+    public static function query_params(?string $param = null): string|array|null
+    {
+        if ($param)
+            return self::query($param);
+        return $_GET;
+    }
+
+
     /**
      * @param string $name
      * @return ?string

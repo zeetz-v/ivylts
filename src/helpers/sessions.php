@@ -200,6 +200,14 @@ function getFirstAndLastName(string $fullName): string
 }
 
 
+function user()
+{
+    if (isset($_SESSION["user"]))
+        return (object) $_SESSION["user"];
+    return null;
+}
+
+
 
 function dbEnv(string $file): array
 {
@@ -214,11 +222,13 @@ function dbEnv(string $file): array
  */
 function db_remote(string $file): array
 {
+    $company = path()->get_company();
     $map = [
-        "DB_FILE_INTRANET" => "/var/www/htdocs/{$_ENV['APP_COMPANY']}/includes/configuracoes.php",
-        "DB_FILE_WORKFLOW" => "/var/www/htdocs/{$_ENV['APP_COMPANY']}/includes/sqlserver_wf_prod.php",
-        "DB_FILE_INFORMIX" => "/var/www/htdocs/{$_ENV['APP_COMPANY']}/includes/informix.php",
-        "DB_FILE_SENIOR_GBMX" => "/var/www/htdocs/{$_ENV['APP_COMPANY']}/includes/senior_gbmx.php"
+        "DB_FILE_INTRANET" => "/var/www/htdocs/{$company}/includes/configuracoes.php",
+        "DB_FILE_WORKFLOW" => "/var/www/htdocs/{$company}/includes/sqlserver_wf_prod.php",
+        "DB_FILE_INFORMIX" => "/var/www/htdocs/{$company}/includes/informix.php",
+        "DB_FILE_SENIOR" => "/var/www/htdocs/{$company}/includes/sqlserver_senior.php",
+        "DB_FILE_SENIOR_GBMX" => "/var/www/htdocs/{$company}/includes/senior_gbmx.php"
     ];
     return require $map[$file];
 }
@@ -246,7 +256,7 @@ function db_local(): array
 function is_remote(): bool
 {
     return in_array(
-        $_ENV["APP_ENVIRONMENT"],
+        path()->get_host(),
         ["http://172.30.0.59", "http://172.30.0.94"]
     );
 }

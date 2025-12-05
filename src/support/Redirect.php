@@ -26,10 +26,11 @@ class Redirect
         return $this;
     }
 
-    function route(string $name, array $indexes = [])
+    function route(string $name, array $indexes = [], array $queryString = [])
     {
+        $queryString = http_build_query($queryString);
         $this->returnClass = new RedirectRoute($name, $indexes);
-        $this->uri = $this->returnClass->uri;
+        $this->uri = $this->returnClass->uri . '?' . $queryString;
         return $this;
     }
 

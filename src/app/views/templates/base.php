@@ -18,7 +18,7 @@
 </head>
 
 
-<body class="<?= $_ENV['APP_COMPANY'] ?>">
+<body class="<?= path()->get_company(); ?>">
 
     <div class="container mt-4">
         <ul class="notificationsToasts"></ul>
@@ -29,7 +29,7 @@
                         <?php if (isset($backTo)) { ?><a href="<?= $backTo ?>"
                                 class="d-flex text-decoration-none text-dark me-3"><i
                                     class="ph ph-arrow-left"></i></a><?php } ?><?= $cardTitle ?? null ?></span>
-                    <img src="<?= path()->images("/gbmx.png"); ?>" alt="Logo Empresa">
+                    <img src="<?= path()->images("/ammx.png"); ?>" alt="Logo Empresa">
                 </div>
             </div>
             <div class="card-body">

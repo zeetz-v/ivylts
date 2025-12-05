@@ -33,12 +33,12 @@ function route(string $routeName, array $indexes = [], array $query_params = [])
         }
     }
 
-
+    $url = path()->get_url();
     if (!$r)
         throw new Exception('route.404: ' . $routeName);
     if ($query_params)
-        return $_ENV["APP_URL"] . $r['uri'] . "?" . http_build_query($query_params);
-    return $_ENV["APP_URL"] . $r['uri'];
+        return $url . $r['uri'] . "?" . http_build_query($query_params);
+    return $url . $r['uri'];
 }
 
 

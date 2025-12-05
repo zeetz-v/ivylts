@@ -34,7 +34,7 @@ class UserController
      * Store a user
      * @param StoreRequest $request
      * @return Redirect
-     */
+    */
     function store(StoreRequest $request): Redirect
     {
         $user = $this->user_service->create($request->get());
@@ -42,14 +42,14 @@ class UserController
             return backError('Não foi possível criar o usuário.');
         return backSuccess('O usuário foi criado com sucesso');
     }
-
+    
 
     /**
      * Edit user
      * @param string $uuid
      * @throws NotFoundWithUuidException
      * @return View
-     */
+    */
     function edit(string $uuid): View
     {
         $user = User::getByUuid($uuid);
