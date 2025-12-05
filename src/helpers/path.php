@@ -3,21 +3,37 @@
 function path()
 {
     return new class () {
-        function images(string $path)
+        /**
+         * Obtém o endereço de imagens.
+         * @param string $path
+         * @return string
+         */
+        function images(string $path): string
         {
             if ($path[0] === '/')
                 $path = mb_substr($path, 1);
             return $this->start_path() . "/public/images/{$path}";
         }
 
-        function js(string $path)
+        /**
+         * Obtém o endereço dos arquivos javascript.
+         * @param string $path
+         * @return string
+         */
+        function js(string $path): string
         {
             if ($path[0] !== '/')
                 $path = "/{$path}";
             return $this->start_path() . "/public/js{$path}";
         }
 
-        function css(string $path)
+
+        /**
+         * Obtém o endereço dos css.
+         * @param string $path
+         * @return string
+         */
+        function css(string $path): string
         {
             if ($path[0] !== '/')
                 $path = "/{$path}";
@@ -25,19 +41,35 @@ function path()
         }
 
 
-        function storage(string $path = "")
+        /**
+         * Obtém o endereço de storage (arquivos de uploads).
+         * @param string $path
+         * @return string
+         */
+        function storage(string $path = ""): string
         {
             $link = str_replace($_ENV["APP_DIR"], $_ENV["APP_DIR"] . "-storage", $this->start_path() . "/{$path}");
             return $link;
         }
 
-        function storage_server(string|null $complement = null)
+
+        /**
+         * Obtém o endereço absoluto do servidor.
+         * @param string|null $complement
+         * @return string
+         */
+        function storage_server(string|null $complement = null): string
         {
             return getcwd() . "-storage/" . $complement;
         }
 
 
-        function start_path(string $complement = '')
+        /**
+         * Obtém o endereço de imagens.
+         * @param string $complement
+         * @return string
+         */
+        function start_path(string $complement = ''): string
         {
             $r = !is_remote() ? path()->get_host() : path()->get_host() . '/' . str_replace('/var/www/htdocs/', "", getcwd());
             if (empty($complement))
@@ -46,14 +78,21 @@ function path()
         }
 
 
-
-        function server(string|null $complement = null)
+        /**
+         * Obtém o endereço do servidor + complemento informado via parâmetro.
+         * @param string|null $complement
+         * @return string
+         */
+        function server(string|null $complement = null): string
         {
             return getcwd() . $complement;
         }
 
-
-        function get_url()
+        /**
+         * Obtém o url da aplicação.
+         * @return string
+         */
+        function get_url(): string
         {
             if (is_remote()) {
                 $getcwd = array_filter(
@@ -74,7 +113,11 @@ function path()
             }
         }
 
-        function get_company()
+        /**
+         * Obtém a empresa que está a aplicação.
+         * @return string
+         */
+        function get_company(): string
         {
             if (is_remote()) {
                 $getcwd = array_values(
@@ -90,8 +133,11 @@ function path()
             }
         }
 
-
-        function get_host()
+        /**
+         * Obtém o host da aplicação.
+         * @return string
+         */
+        function get_host(): string
         {
             $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
                 ? "https://"
