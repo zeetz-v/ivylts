@@ -2,52 +2,13 @@
 
 namespace src\routes;
 
-use src\app\controllers\UserController;
+use src\app\controllers\SkopeController;
 use src\core\Route;
 
 
 Route::get(
-    '/users/list',
-    UserController::class,
-    'list'
+    '/',
+    SkopeController::class,
+    'index'
 )
-    ->name('users.list');
-
-Route::post(
-    '/users/store',
-    UserController::class,
-    'store'
-)
-    ->name('users.store');
-
-Route::get(
-    '/users/edit/{uuid}',
-    UserController::class,
-    'edit'
-)
-    ->name('users.edit')
-    ->whereUuid('uuid');
-
-
-Route::post(
-    '/users/update/{uuid}',
-    UserController::class,
-    'update'
-)
-    ->name('users.update');
-
-Route::get(
-    '/users/delete/{uuid}',
-    UserController::class,
-    'delete'
-)
-    ->name('users.delete')
-    ->whereUuid('uuid');
-
-Route::get(
-    '/users/status/change/{uuid}',
-    UserController::class,
-    'status_change'
-)
-    ->name('users.status.change')
-    ->whereUuid('uuid');
+    ->name('skopes.index');

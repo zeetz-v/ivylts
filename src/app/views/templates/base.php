@@ -18,11 +18,11 @@
 </head>
 
 
-<body class="<?= path()->get_company(); ?>">
+<body class="<?= path()->get_company(); ?>" style="min-height: calc(100vh - 100px);">
 
-    <div class="container mt-4">
+    <div class="container mt-4" style="min-height: calc(100vh - 100px);">
         <ul class="notificationsToasts"></ul>
-        <div class="card mb-4">
+        <div class="card mb-4" style="min-height: inherit;">
             <div class="card-header">
                 <div class="name-and-logo">
                     <span class="d-flex align-items-center">
@@ -36,12 +36,9 @@
                 <?= $this->section("content"); ?>
             </div>
         </div>
-
-
-        <?= $this->section("series"); ?>
     </div>
 
-   
+
     <?= $this->insert('templates/loading'); ?>
 
     <script src="<?= path()->js("/bs5.js?t={$t}") ?>"></script>

@@ -63,8 +63,7 @@ table tbody tr:nth-child(even) {
     background-color: #f2f2f2;
 }
 
-
-/* Rounding of the table edges */
+/* 
 table thead tr:first-child {
     border-top-left-radius: 12px !important;
     border-top-right-radius: 12px !important;
@@ -89,7 +88,7 @@ table tbody tr:last-child td:first-child {
 
 table tbody tr:last-child td:last-child {
     border-bottom-right-radius: 12px !important;
-}
+} */
 
 
 

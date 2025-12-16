@@ -271,3 +271,26 @@ input[readonly] {
 #dialog-green {
   border-left: 3px solid #2c9940;
 }
+
+.bg-primary {
+  background-color: #091a7a !important;
+  color: #fff;
+}
+.bg-success {
+  background-color: #85be09 !important;
+  color: #fff;
+}
+
+.bg-warning {
+  background-color: #ffe8b2 !important;
+  color: #fff;
+}
+
+.bg-danger {
+  background-color: #ffc8ae !important;
+  color: #fff;
+}
+
+.t-gray {
+  color: #a3a3a3;
+}
