@@ -1,7 +1,7 @@
 <?php
 $this->layout("templates/base", [
-    "webTitle" => "Usuários",
-    "cardTitle" => "Projetos - Estimativas",
+    "webTitle" => "Scopify - List Empty",
+    "cardTitle" => "Scopify - List Empty",
     "styles" => [],
     "js" => [],
 ]);

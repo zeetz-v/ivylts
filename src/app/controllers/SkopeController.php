@@ -1,4 +1,5 @@
 <?php
+
 namespace src\app\controllers;
 
 use src\app\services\UserService;
@@ -6,14 +7,25 @@ use src\support\View;
 
 class SkopeController
 {
+    /**
+     * Constructor do SkopeController
+     * 
+     * Inicializa o controller com as dependências necessárias através de injeção de dependência.
+     * 
+     * @param UserService $user_service Serviço responsável pela gestão de usuários
+     */
     function __construct(
         private UserService $user_service,
-    ) {
-    }
+    ) {}
 
     /**
-     * List users
-     * @return View
+     * Exibe a listagem de escopos (skopes)
+     * 
+     * Este método retorna uma view com a lista de escopos disponíveis.
+     * Caso não existam escopos, exibe uma notificação de sucesso e retorna
+     * uma view vazia específica.
+     * 
+     * @return View Retorna a view 'skopes.index' com a lista de escopos ou 'skopes.empty' se não houver escopos
      */
     function index()
     {
