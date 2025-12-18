@@ -4,5 +4,6 @@ namespace src\support;
 
 final class Status
 {
-    public const AD = "Aguardando Análise Tecnológica";
+    public const WITH_DEVS = "AD";
+    public const WITH_ESTIMATED = "AP";
 }

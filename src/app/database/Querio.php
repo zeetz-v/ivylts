@@ -234,7 +234,6 @@ class Querio
 
                 $stmt = static::$db->prepare(static::$queryString);
                 $stmt->execute(static::$bind ?? []);
-                // $stmt->setFetchMode(PDO::FETCH_OBJ);
                 $stmt->setFetchMode(PDO::FETCH_CLASS, static::class);
 
 
@@ -251,18 +250,16 @@ class Querio
                 }
             }
         } catch (PDOException $e) {
-            if (str_contains($e->getMessage(), "doesn't have a default value")) {
+            if (str_contains($e->getMessage(), "doesn't have a default value"))
                 throw new ColumnDoesntHaveADefaultValueException(['message from pdo' => $e->errorInfo[2]]);
-            } else if (str_contains($e->getMessage(), 'Base table or view not found')) {
+            else if (str_contains($e->getMessage(), 'Base table or view not found'))
                 throw new TableOrViewNotFoundException(['message from pdo' => $e->errorInfo[2]]);
-            } else if (str_contains($e->getMessage(), 'Column not found')) {
+            else if (str_contains($e->getMessage(), 'Column not found'))
                 throw new ColumnNotFoundException(['message from pdo' => $e->errorInfo[2]]);
-            } else if (str_contains($e->getMessage(), 'Incorrect integer value')) {
+            else if (str_contains($e->getMessage(), 'Incorrect integer value'))
                 throw new IntegerValueException(['message from pdo' => $e->errorInfo[2]]);
-            } else if (str_contains($e->getMessage(), 'Duplicate entry')) {
+            else if (str_contains($e->getMessage(), 'Duplicate entry'))
                 throw new DuplicateEntryException(['message from pdo' => $e->errorInfo[2]]);
-            }
-            dd(static::$queryString, static::$bind, $e);
             return false;
         }
     }

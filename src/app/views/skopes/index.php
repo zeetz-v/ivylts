@@ -2,8 +2,8 @@
 $count = count($skopes);
 $time = time();
 $this->layout("templates/base", [
-    "webTitle" => "Scopify - List ($count)",
-    "cardTitle" => "Scopify - List ($count)",
+    "webTitle" => "scoopify - List ($count)",
+    "cardTitle" => "scoopify - List ($count)",
     "styles" => [
         path()->css("skopes/index.css?v=$time"),
     ],
@@ -28,22 +28,21 @@ $this->layout("templates/base", [
 
         <tbody>
             <?php foreach ($skopes as $skope_idx => $skope) { ?>
-                <?php $estimated = mb_strtolower($skope["status"]) === "estimado"; ?>
                 <tr>
-                    <td><span><a href="#" class="t-gray">#SR<?= $skope["id"] ?></a></span></td>
+                    <td><span><a href="#" class="t-gray">#SR<?= $skope->id ?></a></span></td>
                     <td>
                         <div class="d-flex justify-content-center align-items-center">
                             <div class="status">
-                                <div class="dot <?= $estimated ? 'estimado' : 'aguardando' ?>"></div>
-                                <span><?= $estimated ? 'estimado' : 'aguardando' ?></span>
+                                <div class="dot <?= $skope->is_estimated() ? 'estimado' : 'aguardando' ?>"></div>
+                                <span><?= $skope->is_estimated() ? 'estimado' : 'aguardando' ?></span>
                             </div>
                         </div>
                     </td>
-                    <td><?= $skope["title"] ?></td>
-                    <td><?= $skope["analyst"] ?></td>
-                    <td><?= $skope["developer"] ?></td>
+                    <td><?= $skope->title ?></td>
+                    <td><?= $skope->analyst ?></td>
+                    <td><?= $skope->developer ?></td>
                     <td>
-                        <?php if (!$estimated) { ?>
+                        <?php if (!$skope->is_estimated()) { ?>
                             <a href="#" class="btn btn-company">Start Session <i class="ph ph-arrow-right"></i></a>
                         <?php } else { ?>
                             <a href="#" class="btn btn-dark">Review <i class="ph ph-arrows-clockwise"></i></a>
