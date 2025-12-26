@@ -26,13 +26,13 @@ class Session extends Querio
      * @return mixed Retorna a sessão criada ou atualizada, ou null se a sessão
      *               está atualmente em andamento (IN_SESSION)
      *
-     * @see self::get_by_project_id()
+     * @see self::by_project_id()
      * @see self::create()
      * @see self::update()
      */
     static function start(int $project_id)
     {
-        $has = self::get_by_project_id($project_id);
+        $has = self::by_project_id($project_id);
         if (!$has)
             return self::create(["project_id" => $project_id, "status" => Status::WAITING_DEVS]);
 
@@ -50,18 +50,22 @@ class Session extends Querio
      *
      * @return Session|null Retorna uma instância de Session se encontrada, ou null caso contrário
      */
-    static function get_by_project_id(int $project_id): Session|null
+    static function by_project_id(int $project_id): Session|null
     {
         return self::selectOne()->whereEquals("project_id", $project_id)->finish();
     }
 
 
-    static function participants_join(
-        int $session_id,
-        string $user_key,
-        string $user_name,
-        string $rule
-    ) {
+    /**
+     * adiciona um participante a uma sessão.
+     * @param int $session_id
+     * @param string $user_key
+     * @param string $user_name
+     * @param string $rule - host ou participant
+     * @return array|bool|object
+     */
+    static function join(int $session_id, string $user_key, string $user_name, string $rule)
+    {
         $data = [
             "session_id" => $session_id,
             "user_key" => $user_key,
@@ -72,7 +76,14 @@ class Session extends Querio
     }
 
 
-    static function get_participants(int $session_id)
+    /**
+     * Obtém todos os participantes de uma sessão específica.
+     *
+     * @param int $session_id O identificador único da sessão
+     *
+     * @return array|null Retorna um array de participantes da sessão
+     */
+    static function participants(int $session_id): array|null
     {
         return self::table("bd_amsted.scoopify_session_participants")
             ->select()
@@ -80,7 +91,14 @@ class Session extends Querio
             ->finish();
     }
 
-    static function get_participants_only_keys(int $session_id)
+    /**
+     * Obtém apenas as chaves dos participantes de uma sessão específica.
+     *
+     * @param int $session_id O identificador único da sessão
+     *
+     * @return array|null Retorna um array contendo apenas as chaves dos participantes
+     */
+    static function participants_only_keys(int $session_id): array|null
     {
         $participants = self::table("bd_amsted.scoopify_session_participants")
             ->select()
@@ -91,9 +109,19 @@ class Session extends Querio
     }
 
 
+    /**
+     * Verifica se um participante específico está em uma sessão.
+     *
+     * @param int $session_id O identificador único da sessão
+     * @param string $user_key A chave do usuário a ser verificado
+     *
+     * @return bool Retorna true se o participante estiver na sessão, false caso contrário
+     */
     static function is_participant_in_session(int $session_id, string $user_key)
     {
-        $participants = self::get_participants_only_keys($session_id);
+        $participants = self::participants_only_keys($session_id);
+        if (!$participants)
+            return false;
         return in_array($user_key, $participants);
     }
 }

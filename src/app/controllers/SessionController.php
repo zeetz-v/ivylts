@@ -33,7 +33,7 @@ class SessionController
     {
         $skp = Skope::getByUuid($uuid) ?? throw new NotFoundWithUuidException();
         $session = Session::start($skp->id) ?? throw new SessionInProgressException(["data" => $skp]);
-        Session::participants_join(
+        Session::join(
             $session->id,
             user()->matricula,
             user()->nome,
@@ -64,13 +64,13 @@ class SessionController
     {
         $skp = Skope::getByUuid($uuid)
         ?? throw new NotFoundWithUuidException();
-        $session = Session::get_by_project_id($skp->id)
+        $session = Session::by_project_id($skp->id)
         ?? throw new NotFoundSessionException(["data" => $skp]);
         $user = user();
 
 
         if (!Session::is_participant_in_session($session->id, $user->matricula))
-            Session::participants_join(
+            Session::join(
                 $session->id,
                 $user->matricula,
                 $user->nome,

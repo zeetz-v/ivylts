@@ -14,6 +14,8 @@ class SkopeController
      */
     function __construct() {}
 
+
+    
     /**
      * Exibe a listagem de escopos (skopes)
      * 

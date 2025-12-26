@@ -41,24 +41,42 @@ class Skope extends Querio
     }
 
 
+    /**
+     * verifica se o o status do projeto está como esperando desenvolvedores
+     * @return bool
+     */
     function waiting(): bool
     {
         return $this->get_in_status(Status::WAITING_DEVS);
     }
 
+    /**
+     * verifica se o o status do projeto está como em sessão
+     * @return bool
+     */
     function in_session(): bool
     {
         return $this->get_in_status(Status::IN_SESSION);
     }
 
+    /**
+     * verifica se o o status do projeto está como não em sessão
+     * @return bool
+     */
     function not_in_session(): bool
     {
         return $this->get_in_status(Status::NOT_IN_SESSION);
     }
 
+    /**
+     * Verifica se o projeto está em um status específico
+     * 
+     * @param string $status O status a ser verificado
+     * @return bool Retorna true se o projeto estiver no status especificado, false caso contrário
+     */
     function get_in_status(string $status): bool
     {
-        $session = Session::get_by_project_id($this->id);
+        $session = Session::by_project_id($this->id);
         if (!$session)
             return false;
         return $session->status === $status;
