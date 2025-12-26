@@ -223,7 +223,12 @@ h1 {
   }
 }
 
-
 .hidden-info {
   display: none;
+}
+
+@media (max-width: 1350px) {
+  .container {
+    max-width: 80% !important;
+  }
 }
