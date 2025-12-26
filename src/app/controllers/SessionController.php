@@ -10,7 +10,6 @@ use src\exceptions\app\NotFoundWithUuidException;
 use src\exceptions\app\SessionInProgressException;
 use src\support\Json;
 use src\support\Redirect;
-use src\support\RedirectRoute;
 use src\support\Rules;
 use src\support\View;
 
@@ -71,15 +70,18 @@ class SessionController
         $user = user();
 
 
-
-        Session::join(
+        Session::join( 
             $session->id,
             $user->matricula,
             $user->nome,
             Rules::PARTICIPANT
         );
-
-        return view("sessions.waiting", ["skope" => $skp, "session" => $session]);
+        $is_host = Session::is_host($session->id, $user->matricula);
+        return view("sessions.waiting", [
+            "skope" => $skp,
+            "session" => $session,
+            "is_host" => $is_host
+        ]);
     }
 
 

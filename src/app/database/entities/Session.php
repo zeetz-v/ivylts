@@ -3,6 +3,7 @@
 namespace src\app\database\entities;
 
 use src\app\database\Querio;
+use src\support\Rules;
 use src\support\Status;
 
 class Session extends Querio
@@ -128,5 +129,26 @@ class Session extends Querio
         if (!$participants)
             return false;
         return in_array($user_key, $participants);
+    }
+
+
+
+    /**
+     * Verifica se um usuário é o host de uma sessão específica.
+     *
+     * @param int $session_id O identificador único da sessão
+     * @param string $user_key A chave do usuário a ser verificado
+     *
+     * @return bool Retorna true se o usuário for o host da sessão, false caso contrário
+     */
+    static function is_host(int $session_id, string $user_key): bool
+    {
+        $participant = self::table("bd_amsted.scoopify_session_participants")
+            ->selectOne()
+            ->whereEquals("session_id", $session_id)
+            ->andWhere("user_key", '=', $user_key)
+            ->andWhere("rule", '=', Rules::HOST)
+            ->finish();
+        return $participant != null;
     }
 }

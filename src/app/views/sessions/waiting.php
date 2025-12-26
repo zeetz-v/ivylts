@@ -10,11 +10,14 @@ $this->layout("templates/base", [
 ?>
 
 
+<!-- hidden info -->
 <div class="hidden-info">
     <input type="text" id="skope_id" value="<?= $skope->id ?>">
     <input type="text" id="session_id" value="<?= $session->id ?>">
 </div>
 
+
+<!-- header/title -->
 <div>
     <h1 class="">Waiting anothers participants</h1>
 
@@ -24,6 +27,7 @@ $this->layout("templates/base", [
 </div>
 
 
+<!-- status/contador -->
 <div class="session-status">
     <div class="status-icon">
         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -37,25 +41,12 @@ $this->layout("templates/base", [
     </div>
 </div>
 
-
+<!-- lista de participantes -->
 <div class="user-list">
-
-    <!-- <div class="user-item selected">
-        <img src="https://i.pravatar.cc/150?img=12" alt="Luiza Santos" class="user-avatar">
-        <div class="user-info">
-            <div class="user-name">Gabriel Ferreira</div>
-            <div class="user-email">Entrou há 20 segundos</div>
-        </div>
-        <div class="user-action">
-            <div class="check-icon">
-                <i class="ph ph-check"></i>
-            </div>
-        </div>
-    </div> -->
-
 </div>
 
 
+<!-- loading -->
 <div class="wait-loader mt-5">
     <p class="wait-heading">Loading</p>
     <div class="wait-loading">
@@ -66,6 +57,14 @@ $this->layout("templates/base", [
     </div>
 </div>
 
+
+
+<!-- go to session (só é exibido para o host) -->
+<?php if ($is_host) { ?>
+    <div class="d-flex justify-content-center align-items-center flex-column mt-4">
+        <small class="text-muted">Already? <a href="" class="">Go Now 🚀</a></small>
+    </div>
+<?php } ?>
 
 
 <script>
