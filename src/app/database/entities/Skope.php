@@ -41,6 +41,29 @@ class Skope extends Querio
     }
 
 
+    function waiting(): bool
+    {
+        return $this->get_in_status(Status::WAITING_DEVS);
+    }
+
+    function in_session(): bool
+    {
+        return $this->get_in_status(Status::IN_SESSION);
+    }
+
+    function not_in_session(): bool
+    {
+        return $this->get_in_status(Status::NOT_IN_SESSION);
+    }
+
+    function get_in_status(string $status): bool
+    {
+        $session = Session::get_by_project_id($this->id);
+        if (!$session)
+            return false;
+        return $session->status === $status;
+    }
+
     /**
      * Busca todos os projetos com status específicos
      * 

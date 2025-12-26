@@ -213,7 +213,7 @@ class Querio
         try {
             $firstWord = strstr(static::$queryString, ' ', true);
             if (!is_string($firstWord)) {
-                return false;
+                return null;
             }
             $operation = strtolower(trim($firstWord));
             $isSelect = $operation === 'select';
@@ -224,9 +224,9 @@ class Querio
                 $stmt = static::$db->prepare(static::$queryString);
                 $r = $stmt->execute(static::$bind ?? []);
                 if ($operation === 'insert')
-                    return array_merge(['id' => static::$db->lastInsertId()], static::$bind);
+                    return (object) array_merge(['id' => static::$db->lastInsertId()], static::$bind);
                 else if ($operation === 'update')
-                    return static::$bind;
+                    return (object) static::$bind;
                 return $r;
             } else {
                 if (static::$selectIsOne)
@@ -240,12 +240,12 @@ class Querio
                 if (static::$selectIsOne) {
                     $found = $stmt->fetch();
                     if (!$found)
-                        return false;
+                        return null;
                     return $found;
                 } else {
                     $found = $stmt->fetchAll();
                     if (!$found)
-                        return false;
+                        return null;
                     return $found;
                 }
             }
@@ -489,9 +489,9 @@ class Querio
     /**
      * @param array $data
      * @param bool $setUuid - Flag to ignore the field uuid
-     * @return bool|array<string, mixed>
+     * @return bool|array<string, mixed>|object
      */
-    public static function create(array $data, bool $setUuid = true): bool|array
+    public static function create(array $data, bool $setUuid = true): bool|array|object
     {
         if ($setUuid)
             $data['uuid'] = UuidV4::uuid4()->toString();

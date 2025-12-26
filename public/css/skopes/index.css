@@ -99,3 +99,18 @@
 #session img {
   height: 480px;
 }
+
+/* ========== SPINNING ANIMATION ========== */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spinning {
+  animation: spin 1.5s linear infinite;
+  display: inline-block;
+}

@@ -42,10 +42,15 @@ $this->layout("templates/base", [
                     <td><?= $skope->analyst ?></td>
                     <td><?= $skope->developer ?></td>
                     <td>
-                        <?php if (!$skope->is_estimated()) { ?>
-                            <a href="#" class="btn btn-company">Start Session <i class="ph ph-arrow-right"></i></a>
+
+                        <?php if ($skope->in_session()) { ?>
+                            <a href="#" class="btn btn-secondary">In progress <i class="ph ph-arrows-clockwise spinning"></i></a>
+                        <?php } else if ($skope->waiting()) { ?>
+                            <a href="<?= route("session.join", ["uuid" => $skope->uuid])  ?>" class="btn btn-company">Join in the session <i class="ph ph-rocket-launch"></i></a>
+                        <?php } else if ($skope->is_estimated()) { ?>
+
                         <?php } else { ?>
-                            <a href="#" class="btn btn-dark">Review <i class="ph ph-arrows-clockwise"></i></a>
+                            <a href="<?= route("session.start", ["uuid" => $skope->uuid])  ?>" class="btn btn-company">Start Session <i class="ph ph-arrow-right"></i></a>
                         <?php } ?>
                     </td>
                 </tr>

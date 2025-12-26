@@ -5,7 +5,7 @@ namespace src\exceptions\app;
 use Exception;
 use src\traits\LogException;
 
-class NotFoundWithUuidException extends Exception
+class NotFoundSessionException extends Exception
 {
     private string $entity = 'app';
 

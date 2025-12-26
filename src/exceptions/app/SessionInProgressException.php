@@ -5,7 +5,7 @@ namespace src\exceptions\app;
 use Exception;
 use src\traits\LogException;
 
-class NotFoundWithUuidException extends Exception
+class SessionInProgressException extends Exception
 {
     private string $entity = 'app';
 
@@ -13,7 +13,7 @@ class NotFoundWithUuidException extends Exception
 
     function __construct(array $content = [])
     {
-        $message = 'Not found register. If continue, contact the administrator.';
+        $message = "Sorry, this session is in progress. Wait for the end to start a new session.";
         $code = 500;
         $this->log($message, $code, json_encode($content));
         return parent::__construct($message, $code);
