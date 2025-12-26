@@ -9,6 +9,8 @@ use src\exceptions\app\NotFoundSessionException;
 use src\exceptions\app\NotFoundWithUuidException;
 use src\exceptions\app\SessionInProgressException;
 use src\support\Json;
+use src\support\Redirect;
+use src\support\RedirectRoute;
 use src\support\Rules;
 use src\support\View;
 
@@ -24,7 +26,7 @@ class SessionController
      *
      * @param string $uuid O identificador único do escopo (Skope) a ser iniciado.
      *
-     * @return View A view "sessions.start" com os dados do escopo e da sessão.
+     * @return Redirect - Redireciona o usuário para a rota de junção da sessão.
      *
      * @throws NotFoundWithUuidException Lançada quando o escopo com o UUID fornecido não existe.
      * @throws SessionInProgressException Lançada quando já existe uma sessão em andamento para o escopo.
@@ -40,7 +42,7 @@ class SessionController
             user()->nome,
             Rules::HOST
         );
-        return view("sessions.waiting", ["skope" => $skp, "session" => $session]);
+        return redirect()->route("session.join", ["uuid" => $uuid]);
     }
 
 
