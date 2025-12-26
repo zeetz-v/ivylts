@@ -8,6 +8,7 @@ use src\app\database\entities\Skope;
 use src\exceptions\app\NotFoundSessionException;
 use src\exceptions\app\NotFoundWithUuidException;
 use src\exceptions\app\SessionInProgressException;
+use src\support\Json;
 use src\support\Rules;
 use src\support\View;
 
@@ -39,8 +40,7 @@ class SessionController
             user()->nome,
             Rules::HOST
         );
-
-        return view("sessions.start", ["skope" => $skp, "session" => $session]);
+        return view("sessions.waiting", ["skope" => $skp, "session" => $session]);
     }
 
 
@@ -63,20 +63,39 @@ class SessionController
     public function join(string $uuid)
     {
         $skp = Skope::getByUuid($uuid)
-        ?? throw new NotFoundWithUuidException();
+            ?? throw new NotFoundWithUuidException();
         $session = Session::by_project_id($skp->id)
-        ?? throw new NotFoundSessionException(["data" => $skp]);
+            ?? throw new NotFoundSessionException(["data" => $skp]);
         $user = user();
 
 
-        if (!Session::is_participant_in_session($session->id, $user->matricula))
-            Session::join(
-                $session->id,
-                $user->matricula,
-                $user->nome,
-                Rules::PARTICIPANT
-            );
+
+        Session::join(
+            $session->id,
+            $user->matricula,
+            $user->nome,
+            Rules::PARTICIPANT
+        );
 
         return view("sessions.waiting", ["skope" => $skp, "session" => $session]);
+    }
+
+
+
+    /**
+     * Retorna os participantes de uma sessão específica.
+     *
+     * @param int $id O identificador único da sessão
+     *
+     * @return Json Retorna um JSON com os participantes da sessão
+     *
+     * @throws NotFoundSessionException Se a sessão não existir
+     */
+    function participants(int $id)
+    {
+        $session = Session::getById($id);
+        if (!$session)
+            return Json::return(["message" => "Session not found"], 404);
+        return Json::return(["participants" => Session::participants($session->id)], 200);
     }
 }

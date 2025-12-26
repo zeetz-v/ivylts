@@ -15,3 +15,6 @@ Route::get('/session/start/{uuid}', SessionController::class, 'start')
 
 Route::get('/session/join/{uuid}', SessionController::class, 'join')
     ->name('session.join');
+
+    Route::get('/session/{id}/participants', SessionController::class, 'participants')
+    ->name('session.participants');

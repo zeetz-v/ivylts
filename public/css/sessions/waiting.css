@@ -222,3 +222,8 @@ h1 {
     width: 0.2em;
   }
 }
+
+
+.hidden-info {
+  display: none;
+}

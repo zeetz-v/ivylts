@@ -66,6 +66,11 @@ class Session extends Querio
      */
     static function join(int $session_id, string $user_key, string $user_name, string $rule)
     {
+
+        $is_participant = self::is_participant_in_session($session_id, $user_key);
+        if ($is_participant)
+            return false;
+
         $data = [
             "session_id" => $session_id,
             "user_key" => $user_key,
