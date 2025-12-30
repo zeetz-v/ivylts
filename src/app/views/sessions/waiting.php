@@ -19,9 +19,14 @@ $this->layout("templates/base", [
 </div>
 
 
+<!-- message init wrong -->
+<div class="mb-3">
+    <small class="d-flex justify-content-center align-items-center">Started the session by mistake? &nbsp; <a class="d-flex align-items-center justify-content-center g-3"><i class="ph ph-arrow-left me-1"></i> go back</a></small>
+</div>
+
 <!-- header/title -->
 <div>
-    <h1 class="">Waiting anothers participants</h1>
+    <h1 class="mb-3">Waiting anothers participants</h1>
 
     <p class="session-project">
         <span class="name"><?= $skope->title; ?></span>
